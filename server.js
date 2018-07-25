@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+const bcrypt = require('bcrypt');
 const ObjectID = mongodb.ObjectID;
 
 const USERS_COLLECTION = 'users';
@@ -41,10 +42,17 @@ function handleError(res, reason, message, code) {
 
 app.get('/api/token/:login/:password', (req, res) => {
   db.collection(USERS_COLLECTION).findOne({login: req.params.login}, (err, doc) => {
-    if (err) {
+    if (err || !doc) {
       handleError(res, err.message, 'Login or password is incorrect');
     } else {
-      res.status(200).json(doc);
+      bcrypt.compare(req.params.password, doc.password, (errBcrypt, result) => {
+        if (errBcrypt || !result) {
+          handleError(res, errBcrypt.message, 'Login or password is incorrect');
+        } else {
+          delete doc.password;
+          res.status(200).json(doc);
+        }
+      });
     }
   });
 });
@@ -57,11 +65,18 @@ app.post('/api/user', (req, res) => {
   if (!req.body.login || !req.body.password) {
     handleError(res, 'Invalid input', 'Must provide a login and password', 400);
   } else {
-    db.collection(USERS_COLLECTION).insertOne(newUser, (err, doc) => {
-      if (err) {
-        handleError(res, err.message, 'There was an error creating the new user');
+    bcrypt.hash(req.body.password, 10, (errBcrypt, hash) => {
+      if (errBcrypt) {
+        handleError(res, errBcrypt.message, 'There was an error creating the new user');
       } else {
-        res.status(201).json(doc.ops[0]);
+        newUser.password = hash;
+        db.collection(USERS_COLLECTION).insertOne(newUser, (err, doc) => {
+          if (err) {
+            handleError(res, err.message, 'There was an error creating the new user');
+          } else {
+            res.status(201).json(doc.ops[0]);
+          }
+        });
       }
     });
   }
