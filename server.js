@@ -47,7 +47,7 @@ app.get('/api/token/:login/:password', (req, res) => {
     } else {
       bcrypt.compare(req.params.password, doc.password, (errBcrypt, result) => {
         if (errBcrypt || !result) {
-          handleError(res, errBcrypt.message, 'Login or password is incorrect');
+          handleError(res, errBcrypt, 'Login or password is incorrect');
         } else {
           delete doc.password;
           res.status(200).json(doc);
@@ -67,7 +67,7 @@ app.post('/api/user', (req, res) => {
   } else {
     bcrypt.hash(req.body.password, 10, (errBcrypt, hash) => {
       if (errBcrypt) {
-        handleError(res, errBcrypt.message, 'There was an error creating the new user');
+        handleError(res, errBcrypt, 'There was an error creating the new user');
       } else {
         newUser.password = hash;
         db.collection(USERS_COLLECTION).insertOne(newUser, (err, doc) => {
