@@ -51,7 +51,7 @@ app.get('/api/token/:login/:password', (req, res) => {
 
 // User routes
 
-app.post('/api/user/:login/:password', (req, res) => {
+app.post('/api/user', (req, res) => {
   const newUser = req.body;
 
   if (!req.body.login || !req.body.password) {
