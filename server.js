@@ -48,3 +48,21 @@ app.get('/api/token/:login/:password', (req, res) => {
     }
   });
 });
+
+// User routes
+
+app.post('/api/user/:login/:password', (req, res) => {
+  const newUser = req.body;
+
+  if (!req.body.login || !req.body.password) {
+    handleError(res, 'Invalid input', 'Must provide a login and password', 400);
+  } else {
+    db.collection(USERS_COLLECTION).insertOne(newUser, (err, doc) => {
+      if (err) {
+        handleError(res, err.message, 'There was an error creating the new user');
+      } else {
+        res.status(201).json(doc.ops[0]);
+      }
+    });
+  }
+});
