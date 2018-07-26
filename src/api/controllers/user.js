@@ -12,3 +12,13 @@ exports.post = (req, res) => {
     }
   });
 };
+
+exports.getAll = (req, res) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(users);
+    }
+  });
+}
