@@ -2,7 +2,7 @@ export class User {
   _id?: string;
   email: string;
   password: string;
-  name: {
+  name?: {
     first: string;
     last: string;
   };
