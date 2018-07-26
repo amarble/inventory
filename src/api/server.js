@@ -7,6 +7,13 @@ import bodyParser from 'body-parser';
 const api = express();
 api.use(bodyParser.json());
 
+api.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  next();
+});
+
 api.listen(process.env.PORT || 8080, err => {
   if (err) {
     process.exit(1);
