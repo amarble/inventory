@@ -1,7 +1,7 @@
 import User from '../models/user';
 
 exports.post = (req, res) => {
-  const data = Object.assign({}, req.body, {user: req.user.sub}) || {};
+  const data = Object.assign({}, req.body) || {};
 
   User.create(data, (err, user) => {
     if (err || !user) {
