@@ -33,7 +33,11 @@ export const UserSchema = new Schema({
   }
 }, {collection: 'users'});
 
-UserSchema.pre('create', function (next) {
+UserSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+  }
+
   let token;
   const expires = addDays(new Date(), 1);
   crypto.randomBytes(128, (err, buff) => token = buff.toString('hex'));
