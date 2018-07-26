@@ -38,11 +38,12 @@ UserSchema.pre('save', function (next) {
     next();
   }
 
-  let token;
   const expires = addDays(new Date(), 1);
-  crypto.randomBytes(128, (err, buff) => token = buff.toString('hex'));
-  this.reset = { token: token, expires: expires };
-  next();
+  crypto.randomBytes(128, (err, buff) => {
+    const token = buff.toString('hex');
+    this.reset = { token: token, expires: expires };
+    next();
+  });
 });
 
 UserSchema.plugin(bcrypt);
