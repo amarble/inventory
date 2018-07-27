@@ -7,7 +7,19 @@ import jwt from 'express-jwt';
 import cors from 'cors';
 
 const api = express();
-api.use(cors());
+
+const originsWhitelist = [
+  'http://localhost:4200'
+];
+const corsOptions = {
+  origin: function(origin, callback){
+    const isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+    callback(null, isWhitelisted);
+  },
+  credentials:true
+}
+app.use(cors(corsOptions));
+
 api.use(bodyParser.json());
 api.use(jwt({ secret: process.env.JWT_SECRET })).unless({
   path: [
