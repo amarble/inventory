@@ -7,14 +7,13 @@ import jwt from 'express-jwt';
 import cors from 'cors';
 
 const api = express();
+api.use(cors());
 api.use(bodyParser.json());
 api.use(jwt({ secret: process.env.JWT_SECRET })).unless({
   path: [
     '/auth/token'
   ]
 });
-
-api.use(cors());
 
 api.listen(process.env.PORT || 8080, err => {
   if (err) {
