@@ -27,6 +27,7 @@ export const UserSchema = new Schema({
       trim: true,
     }
   },
+  userLevel: String,
   reset: {
     token: String,
     expires: Date
@@ -39,7 +40,7 @@ UserSchema.pre('save', function (next) {
   }
 
   const expires = addDays(new Date(), 1);
-  crypto.randomBytes(128, (err, buff) => {
+  crypto.randomBytes(64, (err, buff) => {
     const token = buff.toString('hex');
     this.reset = { token: token, expires: expires };
     next();

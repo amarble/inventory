@@ -1,6 +1,7 @@
 import User from '../models/user';
+import jwt from 'jsonwebtoken';
 
-exports.get = (req, res) => {
+exports.post = (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err || !user) {
       res.status(401).json({error: 'Email or password incorrect'});
@@ -9,7 +10,11 @@ exports.get = (req, res) => {
         if (bErr || !result) {
           res.status(401).json({error: 'Email or password incorrect'});
         } else {
-          res.status(200).json({token: 'Who wants a token?'});
+          const token = jwt.sign(
+            { id: user._id, userLevel: user.userLevel },
+            process.env.JWT_SECRET,
+            { expiresIn: 86400 });
+          res.status(200).send( {auth: true, token: token} );
         }
       });
     }
