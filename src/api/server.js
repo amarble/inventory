@@ -8,17 +8,17 @@ import cors from 'cors';
 
 const api = express();
 
-const originsWhitelist = [
-  'http://localhost:4200'
-];
-const corsOptions = {
-  origin: function(origin, callback){
-    const isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
-    callback(null, isWhitelisted);
-  },
-  credentials:true
-}
-app.use(cors(corsOptions));
+api.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  } else {
+    next();
+  }
+});
 
 api.use(bodyParser.json());
 api.use(jwt({ secret: process.env.JWT_SECRET })).unless({

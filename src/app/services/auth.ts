@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -13,7 +13,8 @@ export class AuthService {
 
   login(email: String, password: String): Observable<boolean> {
     const req = { email: email, password: password };
-    return this.http.post(this.apiUrl + '/auth/token', req)
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain');
+    return this.http.post(this.apiUrl + '/auth/token', req, { headers })
       .pipe(
         map(res => {
           if (res['auth']) {
