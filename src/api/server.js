@@ -4,26 +4,22 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'express-jwt';
+import cors from 'cors';
+import sgMail from '@sendgrid/mail';
 
 const api = express();
 
-api.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-  if (req.method === 'OPTIONS') {
-    res.send(200);
-  } else {
-    next();
-  }
-});
+api.use(cors());
 
 api.use(bodyParser.json());
 
-api.use(jwt({ secret: process.env.JWT_SECRET }).unless({
+api.use(jwt({ secret: process.env.JWT_SECRET, getToken: function (req) {
+  console.log(req.headers.authorization);
+  return req.headers.authorization.split(' ')[1];
+  } }).unless({
   path: [
-    '/auth/token'
+    '/auth/token',
+    '/users/resetPassword'
   ]
 }));
 
@@ -36,6 +32,18 @@ api.listen(process.env.PORT || 8080, err => {
     require('./routes/' + file)(api);
   });
 });
+
+api.use((error, req, res, next) => {
+  if (error) {
+    handleError(res, error.code, error.message, error.status);
+  } else {
+    next();
+  }
+});
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+api.set('sgMail', sgMail);
+
 
 /**
  * Generic error handler

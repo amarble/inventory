@@ -1,0 +1,29 @@
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.mat-card-image {
+  margin-bottom: 0;
+}
+
+mat-card-content {
+  margin: 0;
+  margin-left: -15px;
+}
+
+mat-card {
+  padding-bottom: 4px;
+}
+
+.button-hover {
+  position: absolute;
+  right: -6px;
+  bottom: 19px;
+  opacity: 0.33;
+}
+
+:host(.expanded) {
+  grid-column: 1 / -1;
+}

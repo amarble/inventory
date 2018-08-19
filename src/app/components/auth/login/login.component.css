@@ -1,0 +1,29 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  align-items: center;
+}
+
+.login-container mat-card {
+  width: 600px;
+}
+
+.error {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}

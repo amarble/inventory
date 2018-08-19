@@ -1,0 +1,10 @@
+<mat-card (mouseover)="showButton = true" (mouseleave)="showButton = false" (click)="expand()" *ngIf="!expanded">
+  <img mat-card-image src="/assets/no-image.jpg">
+  <button mat-icon-button class="button-hover" *ngIf="showButton && !expanded"><mat-icon>add_circle</mat-icon></button>
+  <mat-card-content>
+    <p>
+      {{ item.name }}
+    </p>
+  </mat-card-content>
+</mat-card>
+<app-item-view *ngIf="expanded" (collapsed)="collapse()" [item]="item"></app-item-view>

@@ -3,7 +3,13 @@ export class User {
   email: string;
   password: string;
   name?: {
-    first: string;
-    last: string;
+    first?: string;
+    last?: string;
   };
+  level: number;
+  reset?: {
+    token: string;
+    expires: Date;
+  };
+
 }

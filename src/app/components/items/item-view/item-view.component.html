@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ item.name }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ item.category }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="/assets/no-image.jpg">
+  <button mat-icon-button class="button-hover" (click)="collapse()"><mat-icon>remove_circle</mat-icon></button>
+  <mat-card-content>
+    <p>
+      {{ item.description }}
+    </p>
+    <p>
+      <strong>Purchased</strong> for {{ item.purchase.price | currency:'USD' }} on {{ item.purchase.date | date:'shortDate' }} from {{ item.purchase.vendor }}
+    </p>
+    <p>
+      <strong>Listed</strong> for $200 on 05/04/03 on Another Vendor
+    </p>
+    <p>
+      <strong>Sold</strong> for $180 on 05/04/03 to Some Buyer
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Edit</button>
+    <button mat-button>Delete</button>
+    <div class="spacer"></div>
+    <button mat-icon-button><mat-icon>save_alt</mat-icon></button>
+    <button mat-icon-button><mat-icon>open_in_browser</mat-icon></button>
+    <button mat-icon-button><mat-icon>attach_money</mat-icon></button>
+    <button mat-icon-button><mat-icon>local_shipping</mat-icon></button>
+  </mat-card-actions>
+</mat-card>

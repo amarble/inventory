@@ -1,0 +1,23 @@
+mat-toolbar {
+  display: flex;
+}
+
+.navbar-spacer {
+  flex-grow: 1;
+}
+
+#page-container {
+  display: grid;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  grid-template-columns: 100%;
+  grid-template-rows: auto 1fr;
+}
+
+#body {
+  display: grid;
+  grid-template-rows: 0 1fr;
+}

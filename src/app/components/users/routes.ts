@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { UserListComponent } from './index';
+import { UserDetailsComponent, UserListComponent } from './index';
 
 export const userRoutes: Routes = [
   {
@@ -8,7 +8,8 @@ export const userRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full'},
       { path: 'list', component: UserListComponent },
-      // { path: 'details', component: UserDetailsComponent },
+      { path: 'new', component: UserDetailsComponent },
+      { path: 'details/:id', component: UserDetailsComponent },
     ]
   }
 ];

@@ -1,0 +1,27 @@
+div.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "toolbar toolbar toolbar"
+    "left main right";
+  height: 100%;
+}
+
+div.content-area {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: min-content;
+  grid-gap: 10px;
+}
+
+mat-toolbar {
+  grid-area: toolbar;
+  display: flex;
+  justify-content: center;
+}
+
+.view-selector-container {
+  grid-column: 1 / -1;
+}

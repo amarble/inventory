@@ -1,3 +1,5 @@
 <ul>
   <li *ngFor="let user of users">{{ user.email }} {{ user.name ? user.name.first : '' }} {{ user.name ? user.name.last : '' }}</li>
 </ul>
+
+<a routerLink="/users/new">New user</a>

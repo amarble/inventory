@@ -1,0 +1,22 @@
+<div class="container">
+  <mat-toolbar>
+    <span>Items</span>
+    <button mat-icon-button (click)="addItem()"><mat-icon>add_circle</mat-icon></button>
+  </mat-toolbar>
+  <div class="content-area">
+    <div class="view-selector-container">
+      <mat-button-toggle-group #view="matButtonToggleGroup">
+        <mat-button-toggle value="full">
+          <mat-icon>view_stream</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="thumb">
+          <mat-icon>view_module</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="list">
+          <mat-icon>view_list</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <app-item-thumbnail *ngFor="let item of items" [item]="item"></app-item-thumbnail>
+  </div>
+</div>

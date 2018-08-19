@@ -14,20 +14,19 @@ export const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
     bcrypt: true,
   },
   name: {
-    firstName: {
+    first: {
       type: String,
       trim: true,
     },
-    lastName: {
+    last: {
       type: String,
       trim: true,
     }
   },
-  userLevel: String,
+  level: String,
   reset: {
     token: String,
     expires: Date

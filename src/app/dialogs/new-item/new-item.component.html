@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>
+  New Item
+</h2>
+<mat-dialog-content>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="itemForm">
+      <form [formGroup]="itemForm">
+        <ng-template matStepLabel>Item Details</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Category" formControlName="category" [matAutocomplete]="categoryAC">
+          <mat-autocomplete #categoryAC="matAutocomplete">
+            <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="purchaseForm">
+      <form [formGroup]="purchaseForm">
+        <ng-template matStepLabel>Purchase Info</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Date" formControlName="date" [matDatepicker]="purchaseDate">
+          <mat-datepicker-toggle matSuffix [for]="purchaseDate"></mat-datepicker-toggle>
+          <mat-datepicker #purchaseDate disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Price" formControlName="price">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Vendor" formControlName="vendor" [matAutocomplete]="vendorAC">
+          <mat-autocomplete #vendorAC="matAutocomplete">
+            <mat-option *ngFor="let vendor of filteredVendors | async" [value]="vendor">
+              {{ vendor }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Notes" formControlName="notes">
+        </mat-form-field>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="shipmentForm" [optional]="true">
+      <form [formGroup]="shipmentForm">
+        <ng-template matStepLabel>Shipment</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Date" formControlName="date">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Method" formControlName="method">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tracking Number" formControlName="tracking">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Notes" formControlName="notes">
+        </mat-form-field>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="deliveryForm" [optional]="true">
+      <form [formGroup]="deliveryForm">
+        <ng-template matStepLabel>Delivery</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Date" formControlName="date">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Notes" formControlName="notes">
+        </mat-form-field>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button mat-dialog-close>Cancel</button>
+  <div class="spacer"></div>
+  <button mat-flat-button (click)="back()" *ngIf="stepper.selectedIndex > 0">Back</button>
+  <button mat-flat-button (click)="next()" *ngIf="stepper.selectedIndex < 3">Next</button>
+  <button mat-flat-button (click)="save()" *ngIf="stepper.selectedIndex === 3">Save</button>
+</mat-dialog-actions>

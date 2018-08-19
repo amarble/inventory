@@ -1,0 +1,40 @@
+div.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "toolbar toolbar toolbar"
+    "left main right";
+  height: 100%;
+}
+
+div.content-area {
+  grid-area: main;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+mat-toolbar {
+  grid-area: toolbar;
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+form > * {
+  width: 100%;
+}
+
+form > div {
+  margin-bottom: 10px;
+}

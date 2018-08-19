@@ -1,3 +1,18 @@
-<a routerLink="/trucks">Trucks</a>
-<a routerLink="/users">Users</a>
-<router-outlet></router-outlet>
+<div id="page-container">
+  <div *ngIf="!authUser" id="header-spacer"></div>
+  <mat-toolbar id="header" *ngIf="authUser" color="primary">
+    <span>Inventory</span>
+    <a mat-button routerLink="/items">Items</a>
+    <div class="navbar-spacer"></div>
+    <button mat-button [matMenuTriggerFor]="userMenu">{{ authUser.name.first }}</button>
+    <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+      <a mat-menu-item [routerLink]="'/users/details/' + authUser._id"><mat-icon>person</mat-icon>Your Account</a>
+      <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
+      <button mat-menu-item (click)="logout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+  <div id="body">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

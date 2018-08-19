@@ -1,0 +1,14 @@
+.button-hover {
+  position: absolute;
+  right: -6px;
+  bottom: 57px;
+  opacity: 0.33;
+}
+
+mat-card-actions {
+  display: flex;
+}
+
+.spacer {
+  flex-grow: 1;
+}
